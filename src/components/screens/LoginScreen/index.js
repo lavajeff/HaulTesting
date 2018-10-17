@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import codePush from "react-native-code-push";
 
-export default class LoginScreen extends Component {
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+};
+
+class LoginScreen extends Component {
   componentDidMount() {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
@@ -10,10 +16,17 @@ export default class LoginScreen extends Component {
   }
 
   login = () => {
-    console.log("logging in");
     this.props.navigator.push({
       screen: "HomeScreen",
       title: "Home"
+    });
+  };
+
+  push = () => {
+    console.log("pushinggggg");
+    codePush.sync({
+      updateDialog: true,
+      installMode: codePush.InstallMode.IMMEDIATE
     });
   };
 
@@ -24,6 +37,11 @@ export default class LoginScreen extends Component {
         <TouchableOpacity style={styles.button} onPress={this.login}>
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={this.push}>
+          <Text style={styles.buttonText}>Code Push</Text>
+        </TouchableOpacity>
+        <Text>Added this via codepush</Text>
+        <Text>CODE PUSH WORKING</Text>
       </View>
     );
   }
@@ -49,3 +67,6 @@ const styles = StyleSheet.create({
     color: "white"
   }
 });
+
+LoginScreen = codePush(codePushOptions)(LoginScreen);
+export default LoginScreen;

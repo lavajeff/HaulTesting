@@ -6,12 +6,15 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "run-ios": "react-native run-ios --simulator='iPhone X'",
-    "ioshaul": "haul start -- --platform ios"
+    "ioshaul": "haul start -- --platform ios",
+    "ios:codepush:bundle": "haul bundle --platform ios --entry-file ./index.js --bundle-output ./codepush/ios/CodePush/main.jsbundle --dev false --build-type production",
+    "ios:codepush:release": "appcenter codepush release-react"
   },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",
     "react-hot-loader": "^4.3.11",
     "react-native": "0.57.3",
+    "react-native-code-push": "^5.4.2",
     "react-native-navigation": "^1.1.489",
     "react-native-splash-screen": "^3.1.1"
   },
