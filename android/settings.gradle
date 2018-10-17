@@ -1,0 +1,3 @@
+rootProject.name = 'HaulTesting'
+
+include ':app'
