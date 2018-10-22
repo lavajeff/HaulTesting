@@ -16,10 +16,28 @@ class LoginScreen extends Component {
   }
 
   login = () => {
-    this.props.navigator.push({
-      screen: "HomeScreen",
-      title: "Home"
-    });
+    const formData = new FormData();
+    formData.append("user", "");
+    formData.append("password", "");
+    formData.append("tokenType", "token");
+
+    fetch("https://www.openlearning.com/json/auth", {
+      method: "POST",
+      body: formData,
+      credentials: "omit"
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json().then(result => {
+            this.props.navigator.push({
+              screen: "HomeScreen",
+              title: "Home",
+              passProps: { result }
+            });
+          });
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   push = () => {
